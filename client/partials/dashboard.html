@@ -1,0 +1,37 @@
+<div ng-controller='topicsController'>
+	<div class='container'>
+		<div class='links'>
+			<button id='logout' ng-click='logout()'>Logout</button>
+		</div>
+		<h2>Welcome {{sessionUser.name}}</h2>
+		<input id='search' type='text' placeholder='search...' ng-model='filter_name'></br>
+		<div class='rowDash'>
+			<table>
+				<thead>
+					<td>Category</td>
+					<td>Topic</td>
+					<td>User Name</td>
+					<td>Post</td>
+				</thead>
+				<tr ng-repeat="topic in topics | orderBy: '-createdAt' | filter: {category: filter_name} ">
+					<td>{{topic.category}}</td>
+					<td><a href="#/topics/{{topic._id}}">{{topic.topic}}</a></td>
+					<td><a href="#/users/{{topic._creator._id}}">{{topic._creator.name}}</a></td>
+					<td>{{topic.posts.length}}</td>
+				</tr>
+			</table>
+			<div class='rowDash'>
+				<h3>Add a New Topic</h3>
+				<div class='form'>
+					<form>
+						<p>Topic: <input class='input' type='text' ng-model='newTopic.topic'></p>
+						<p>Description: <textarea ng-model='newTopic.description'></textarea></p>
+						<p>Category: <select ng-options='category.name for category in categories' ng-model='newTopic.category'></select></p>
+						<input type='submit' ng-click='addTopic(sessionUser._id)'>
+					</form>
+				</div>
+	<!-- 			{{topics}} -->
+			</div>
+		</div>
+	</div>
+</div>
